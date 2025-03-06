@@ -1,0 +1,28 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: 'db'
+      POSTGRES_USER: 'admin'
+      POSTGRES_PASSWORD: 'admin'
+      PGDATA: /var/lib/postgres/data
+    ports:
+      - '5432:5432'
+    networks:
+      - net
+    volumes:
+      - vol:/data/postgres
+  mail:
+    container_name: mail
+    image: maildev/maildev
+    ports:
+      - '1080:1080'
+      - '1025:1025'
+networks:
+  net:
+    driver: bridge
+volumes:
+  vol:
+    driver: local
